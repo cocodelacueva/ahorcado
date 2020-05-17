@@ -1,0 +1,30 @@
+.video-wrapper {
+    padding-bottom: calc(var(--aspect-ratio, .5625) * 100%); 
+    //html video-wrapper must have: style="--aspect-ratio: 3 / 4;"
+
+    iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.transition-all {
+    transition: all $transitionSpeed;
+}
+
+.btn-default {
+    cursor: pointer;
+    display: inline-block;
+    padding: 1rem;
+    @extend .transition-all;
+}
+
+.btn-default-hover-opacity {
+    @extend .btn-default;
+    &:hover {
+        @extend .transition-all;
+    }
+}

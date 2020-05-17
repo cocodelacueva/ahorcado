@@ -1,0 +1,157 @@
+@import 'sass/reset';
+//@import 'sass/fonts';
+@import 'sass/variables';
+@import 'sass/helpers';
+
+/*--------------------------------------------------------------
+5.0 MAIN CSS
+--------------------------------------------------------------*/
+
+.site-wrapper {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 1024;
+    margin: 0 auto;
+    font-family: $fuente-principal;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: normal;
+    background-color: $color-background;
+    color: $color-texto;
+}//.main-wrapper
+
+.main-header {
+    position: relative;
+    z-index: 11;
+    h1 {
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+}//.main-header
+
+.navbar {
+    display: none;
+}//.navbar
+
+.section-wrapper {
+    position: relative;
+    z-index: 0;
+    opacity: 0;
+    @extend .transition-all;
+}//.section-wrapper
+
+.section-wrapper.active {
+    z-index: 1;
+    opacity: 1;
+    @extend .transition-all;
+}//.section-wrapper.active
+
+.btns {
+    @extend .btn-default-hover-opacity;
+    background-color: $color-boton-fondo;
+    color: $color-boton-texto;
+    padding: 1rem 2rem;
+    text-align: center;
+    margin: .7rem auto;
+    font-size: .8rem;
+} 
+
+.titulo-section {
+    font-weight: bold;
+    font-size: 1.75rem;
+    line-height: 2rem;
+}//.titulo-section
+
+.subtitle-section {
+    font-weight: bold;
+    font-size: 1.25rem;
+    line-height: 1.5rem;
+}//.subtitle-section
+
+.opciones-form {
+    
+    label {
+        font-size: 1.25rem;
+        line-height: 1.5rem;
+        display: block;
+        margin: .75rem 0;
+    }
+
+    .input-palabra {
+
+    }
+
+    .dificultad-selector {
+
+    }
+
+    button {
+        @extend .btn-default-hover-opacity;
+        background-color: $color-boton-fondo;
+        color: $color-boton-texto;
+        padding: 1rem 2rem;
+        text-align: center;
+        margin: .7rem auto;
+        font-size: .8rem;
+    }
+}//.opciones-form
+
+
+.resultado-text {
+
+}//.resultado-text
+
+.resumen-juego {
+
+}//.resumen-juego
+
+//JUEGO:
+
+.wrapper-juego {
+    @media (min-width: $md) {
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .ahorcado {
+        @media (min-width: $md) {
+            width: 50%;
+            padding-right: 30px;
+        }
+    }
+    
+
+    .letras {
+        @media (min-width: $md) {
+            width: 50%;
+            padding-left: 30px;
+        }
+    }
+
+    .input-letras {
+        opacity: 0;
+    }
+
+    .letras-lista {
+        li {
+            border-bottom: 1px solid $color-negro;
+            padding: 1rem .5rem;
+            
+            span {
+                opacity: 0;
+                display: inline-block;
+                @extend .transition-all;
+            }
+        }
+
+        li.active {
+            border-bottom-color: rgba(0,0,0,0.3);
+            span {
+                opacity: 1;
+            }
+        }
+    }
+
+}//.wrapper-juego

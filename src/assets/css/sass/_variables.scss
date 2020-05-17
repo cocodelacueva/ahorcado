@@ -1,0 +1,24 @@
+/*FUENTES*/
+$fuente-principal: 'Helvetica Neue', Arial sans-serif;
+
+/*COLORES*/
+$color-blanco: #fff;
+$color-negro: #333;
+$color-background: $color-negro;
+$color-texto: $color-blanco;
+$color-boton-fondo:$color-negro;
+$color-boton-texto:$color-blanco;
+
+/*TIEMPO*/
+$transitionSpeed: .5s;
+
+/*GRID OPTIONS*/
+$xs: 576px; //<576px
+$sm: 768px; //<768px
+$md: 992px;
+$lg: 1200px; //<1200px
+$xlg: 1500px;
+
+$paddingSize: 20px;
+$paddingSizeSM: 40px;
+$paddingSizeMD: 60px;

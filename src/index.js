@@ -1,3 +1,17 @@
 import './assets/css/style.scss';
 
-console.log('oki doky')
+import ahorcado from './assets/js/ahorcado';
+import pantallasNav from './assets/js/pantallas';
+
+document.addEventListener('DOMContentLoaded', function(){
+    
+    //logica de pantallas
+    //pantallasNav();
+
+})
+
+window.addEventListener('load', function(){
+
+    //preparo el juego
+    ahorcado();
+})

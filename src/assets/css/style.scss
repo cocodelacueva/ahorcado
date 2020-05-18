@@ -7,11 +7,15 @@
 5.0 MAIN CSS
 --------------------------------------------------------------*/
 
+html, body {
+    height: 100%;
+}
+
 .site-wrapper {
     position: relative;
     z-index: 1;
     width: 100%;
-    max-width: 1024;
+    max-width: 1024px;
     margin: 0 auto;
     font-family: $fuente-principal;
     font-size: 16px;
@@ -19,15 +23,22 @@
     font-weight: normal;
     background-color: $color-background;
     color: $color-texto;
+    height: 100%;
+    padding: .5rem 1rem;
 }//.main-wrapper
 
 .main-header {
     position: relative;
     z-index: 11;
+    padding: .5rem 1rem;
+    border-bottom: 1px solid $color-negro;
     h1 {
-        font-size: 1.5rem;
+        font-size: 1.25rem;
         font-weight: bold;
-        line-height: 1.5rem;
+        line-height: 1.25rem;
+        text-align: center;
+        text-transform: uppercase
+        ;
     }
 }//.main-header
 
@@ -35,14 +46,39 @@
     display: none;
 }//.navbar
 
+p {
+    margin: 1rem 0;
+}
+
+.juego-main-wrapper {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+} //juego-main-wrapper
+
 .section-wrapper {
     position: relative;
+    display: none;
     z-index: 0;
     opacity: 0;
+    width: 100%;
+    height: 100%;
     @extend .transition-all;
+
+    .inner-section {
+        width: 100%;
+    }
 }//.section-wrapper
 
 .section-wrapper.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     z-index: 1;
     opacity: 1;
     @extend .transition-all;
@@ -54,21 +90,36 @@
     color: $color-boton-texto;
     padding: 1rem 2rem;
     text-align: center;
-    margin: .7rem auto;
+    margin: 2rem auto .7rem;
     font-size: .8rem;
+    width: 150px;
+    display: block;
+    border: 1px solid $color-boton-fondo;
+
+    &:hover {
+        background-color: $color-boton-texto;
+        color: $color-boton-fondo;
+        border-color: $color-boton-fondo;
+    }
 } 
 
 .titulo-section {
     font-weight: bold;
     font-size: 1.75rem;
     line-height: 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
 }//.titulo-section
 
 .subtitle-section {
+    text-align: center;
     font-weight: bold;
     font-size: 1.25rem;
     line-height: 1.5rem;
+    margin-bottom: 1rem;
 }//.subtitle-section
+
+
 
 .opciones-form {
     
@@ -79,8 +130,9 @@
         margin: .75rem 0;
     }
 
-    .input-palabra {
-
+    .input-palabra, .dificultad-selector {
+        height: 2rem;
+        padding: 0 .5rem;
     }
 
     .dificultad-selector {
@@ -93,18 +145,36 @@
         color: $color-boton-texto;
         padding: 1rem 2rem;
         text-align: center;
-        margin: .7rem auto;
+        margin: 2rem auto .7rem;
         font-size: .8rem;
+        width: 150px;
+        display: block;
+        border: 1px solid $color-boton-fondo;
+        font-size: .8rem;
+
+        &:hover {
+            background-color: $color-boton-texto;
+            color: $color-boton-fondo;
+            border-color: $color-boton-fondo;
+        }
     }
 }//.opciones-form
 
 
 .resultado-text {
-
+    text-align: center;
 }//.resultado-text
 
 .resumen-juego {
+    margin: 2rem auto;
+    border: 1px solid $color-negro;
+    padding: 1rem 2rem;
 
+    h4 {
+        font-size: 1.2rem;
+        line-height: 1.5rem;
+        font-weight: bold;
+    }
 }//.resumen-juego
 
 //JUEGO:
@@ -135,11 +205,18 @@
     }
 
     .letras-lista {
+        font-size: 3rem;
+        display: flex;
+        justify-content: center;
+        margin-top: 2rem;
+
         li {
             border-bottom: 1px solid $color-negro;
             padding: 1rem .5rem;
-            
+            margin-right: 1rem;
+
             span {
+                text-transform: uppercase;
                 opacity: 0;
                 display: inline-block;
                 @extend .transition-all;

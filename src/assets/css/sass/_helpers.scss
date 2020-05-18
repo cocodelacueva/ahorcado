@@ -28,3 +28,9 @@
         @extend .transition-all;
     }
 }
+
+.container-width {
+    width: 100%;
+    max-width: 576px;
+    margin: 0 auto;
+}

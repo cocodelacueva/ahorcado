@@ -15,7 +15,7 @@
             <nav class="navbar">
                 <ul class="main-menu">
                     <li>
-                        <a class="btns" href="/">
+                        <a class="btns" href="bienvenida">
                             Inicio
                         </a>
                     </li>
@@ -23,95 +23,137 @@
             </nav>
         </header>
 
-        <div class="juego-wrapper">
+        <div class="juego-main-wrapper">
+
 <!-- PANTALLA BIENVENIDA -->
             <section class="section-wrapper" id="bienvenida">
-                <h2 class="titulo-section">
-                    Bienvenidos
-                </h2>
-                <p>
-                    Deberá escribir una palabra y luego esta desaparecerá y tendra que adivinar como se escribe.
-                </p>
+                <div class="inner-section">
+                    <h2 class="titulo-section">
+                        Bienvenidos
+                    </h2>
+                    <p>
+                        Deberá escribir una palabra y luego esta desaparecerá y tendra que adivinar como se escribe.
+                    </p>
 
-                <a class="btns" href="/start">
-                    Empezar!
-                </a>
+                    <a class="btns" href="palabra">
+                        Empezar!
+                    </a>
+                </div>
             </section>
 
 
     <!-- PANTALLA PALABRA -->
-            <section class="section-wrapper" id="palabra">
-                <h2 class="titulo-section">
-                    Escriba una palabra
-                </h2>
-                <p>
-                    Escriba una sola palabra a continuación y presione empezar.
-                </p>
+            <section class="section-wrapper container-width" id="palabra">
+                <div class="inner-section">
+                    <h2 class="titulo-section">
+                        Escriba una palabra
+                    </h2>
+                    <p>
+                        Escriba una sola palabra a continuación y presione empezar.
+                    </p>
 
-                <form class="opciones-form">
-                    <label for="palabra-input">
-                        Palabra:
-                    </label>
-                    <input name="palabra-input" id="palabra-input" class="input-palabra">
+                    <form id="formulario-juego" class="opciones-form">
+                        <label for="palabra-input">
+                            Palabra:
+                        </label>
+                        <input name="palabra-input" id="palabra-input" class="input-palabra">
 
-                    <label for="dificultad">
-                        Dificultad
-                    </label>
-                    <select name="dificultad" class="dificultad-selector">
-                        <option value="facil">Fácil</option>
-                        <option value="medio">Medio</option>
-                        <option value="dificil">Difícil</option>
-                    </select>
+                        <label for="dificultad">
+                            Dificultad
+                        </label>
+                        <select name="dificultad" class="dificultad-selector">
+                            <option value="facil">Fácil</option>
+                            <option value="medio">Medio</option>
+                            <option value="dificil">Difícil</option>
+                        </select>
 
-                    <button type="submit">Empezar</button>
+                        <button type="submit">Iniciar Juego</button>
 
-                </form>
+                    </form>
 
+                </div>
             </section>
 
     <!-- PANTALLA JUEGO -->
-    <section class="section-wrapper" id="juego">
-        <h2 class="titulo-section">
-            Empecemos
-        </h2>
+            <section class="section-wrapper container-width" id="juego">
+                <div class="inner-section">
+                    <h2 class="titulo-section">
+                        Empecemos
+                    </h2>
 
-        <div class="wrapper-juego">
+                    <div id="tablero" class="wrapper-juego">
 
-            <div class="ahorcado">
-                <img src="assets/images/imange-ahorcado.jpg" srcset="assets/images/imange-ahorcado.jpg 1x, assets/images/imange-ahorcado@2x.jpg 2x" alt="Ahorcado">
-            </div>
+                        <div class="ahorcado">
+                            <img src="assets/images/imagen-ahorcado.jpg" srcset="assets/images/imagen-ahorcado.jpg 1x, assets/images/imagen-ahorcado@2x.jpg 2x" alt="Ahorcado">
+                        </div>
 
-            <div class="letras">
-                <input type="text" name="letras" id="letras" class="input-letras">
+                        <div class="letras">
+                            <input type="text" name="letras" id="letras" class="input-letras">
 
-                <ul class="letras-lista"></ul>
+                            <ul class="letras-lista">
+                                <li>
+                                    <span>e</span>
+                                </li>
+                                <li>
+                                    <span>m</span>
+                                </li>
+                                <li>
+                                    <span>i</span>
+                                </li>
+                                <li>
+                                    <span>l</span>
+                                </li>
+                                <li>
+                                    <span>i</span>
+                                </li>
+                                <li>
+                                    <span>a</span>
+                                </li>
+                            </ul>
 
-            </div>
+                        </div>
 
-        </div><!-- //.wrapper-juego -->
-    </section>
+                    </div><!-- //.wrapper-juego -->
+                </div>
+            </section>
 
     <!-- PANTALLA RESULTADOS -->
-            <section class="section-wrapper" id="resultados">
-                <h2 class="titulo-section">
-                    Felicitaciones
-                </h2>
-                <p class="resultado-text">
-                    Has ganado el juego
-                </p>
+            <section class="section-wrapper container-width" id="resultados">
+                <div class="inner-section">
+                
+                    <h2 class="titulo-section">
+                        Felicitaciones
+                    </h2>
+                    <p class="resultado-text">
+                        Has ganado el juego
+                    </p>
 
-                <div class="resumen-juego"></div>
+                    <div class="resumen-juego">
+                        <h4>
+                            Resultados:
+                        </h4>
+                        <p>
+                            <strong>Tiempo</strong>: 30 segundos
+                        </p>
+                        <p>
+                            <strong>Palabra</strong>: Emilia
+                        </p>
+                        <p>
+                            <strong>Intentos fallidos</strong>: 4
+                        </p>
+                        
+                    </div>
 
-                <h3 class="subtitle-section">
-                    ¿Quieres volver a intentarlo?
-                </h3>
-                <a class="btns" href="/palabra">
-                    Reiniciar!
-                </a>
+                    <h3 class="subtitle-section">
+                        ¿Quieres volver a intentarlo?
+                    </h3>
+                    <a class="btns" href="palabra">
+                        Reiniciar!
+                    </a>
+                </div>
             </section>
         
-        </div>
-        <!-- //.juego-wrapper -->
+        </div><!-- //.juego-wrapper -->
 
     </div>
 </body>

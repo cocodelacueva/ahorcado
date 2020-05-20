@@ -182,6 +182,7 @@ p {
 .wrapper-juego {
     @media (min-width: $md) {
         display: flex;
+        align-items: flex-end;
         justify-content: space-between;
     }
     

@@ -1,7 +1,6 @@
 import './assets/css/style.scss';
 
 import ahorcado from './assets/js/ahorcado';
-import pantallasNav from './assets/js/pantallas';
 
 document.addEventListener('DOMContentLoaded', function(){
     

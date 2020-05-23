@@ -14,49 +14,59 @@ let pantallaActiva = null;
 //elementos juego
 const formularioPalabra = document.querySelector('#formulario-juego');
 const tableroJuego = document.querySelector('#tablero');
-const divAhorcado = tableroJuego.querySelectorAll('.ahorcado');
+const divAhorcado = tableroJuego.querySelector('.ahorcado');
 const divLetras = tableroJuego.querySelector('.letras');
 const inputLetras = divLetras.querySelector('#letras');
 const letrasDiv = divLetras.querySelector('.letras-lista');
 
 //elementos resultados
-const pResumenResultado = resultadosSection.querySelectorAll('.resultado-text');
-const divResumenWrapper = resultadosSection.querySelectorAll('.resumen-juego');
+const pTituloResultado = resultadosSection.querySelector('.titulo-section');
+const pResumenResultado = resultadosSection.querySelector('.resultado-text');
+const divResumenWrapper = resultadosSection.querySelector('.resumen-juego');
 
 //variables del juego
 let palabraABuscar = null;
 let palabras = [];
 let letras = [];
+let letrasAdivinadas = 0;
 let ganador = false;
 let tiempo = 0;
 let dificultad = 'facil';
-let oportunidades = 7;
 let oportunidadesPerdidas = 0;
+let letrasIntentadas = [];
 let timeOut = 20000//20segundos;
-let opcionesDificultad = {
+let opcionesJuego = {
     facil : {
+        oportunidades: 7,
         mostrarLetras: 2,
-        timeOut: 20000//20segundos
+        timeOut: 30000//30segundos
     },
     medio : {
+        oportunidades: 7,
         mostrarLetras: 1,
-        timeOut: 15000//15segundos
+        timeOut: 20000//20segundos
     },
     dificil : {
+        oportunidades: 7,
         mostrarLetras: 0,
         timeOut: 10000//10segundos
     },
 }
 
 //textos
-let juegoIniciado = 'Juego Iniciado';
-let juegoEnPausa = 'Has puesto pausa';
-let resetJuego = 'El juego ha sido borrado';
-let juegoPerdido = 'Has perdido!';
-let textoFinalTiempo = 'Se te acabó el tiempo';
-let palabraRepetida = 'Esta palabra ya la elegiste!!';
-
-
+let textos = {
+    juegoIniciado : 'Juego Iniciado',
+    juegoEnPausa : 'Has puesto pausa',
+    resetJuego : 'El juego ha sido borrado',
+    juegoPerdido : 'Has perdido!',
+    textoFinalTiempo : 'Se te acabó el tiempo',
+    palabraRepetida : 'Esta palabra ya la elegiste!!',
+    hasGanado : 'Has ganado el juego',
+    tituloGanado : 'Felicitaciones!',
+    yaLaDijiste : 'Ya habías dicho esa letra',
+    tituloPerdido : 'Perdiste!',
+    hasPerdido : 'No siempre se gana.',
+};
 
 export default function ahorcado() {
     
@@ -90,10 +100,12 @@ export default function ahorcado() {
 }
 
 function resetGame() {
-    console.log(resetJuego);
+    console.log(textos.resetJuego);
 
+    letrasAdivinadas = 0;
     palabraABuscar = null
     letras = [];
+    letrasIntentadas = [];
     ganador = false;
     tiempo = 0;
     dificultad = 'facil';
@@ -103,20 +115,18 @@ function resetGame() {
 }
 
 function startGame(palabraElegida, dificultadElegida) {
-    console.log(juegoIniciado);
+    console.log(textos.juegoIniciado);
 
-    
     //reset game
     resetGame();
 
     //setear juego nuevo
     palabraABuscar = palabraElegida.toLowerCase();
     dificultad = dificultadElegida;
-    oportunidades = opcionesDificultad[dificultad].oportunidades;
-    timeOut = opcionesDificultad[dificultad].timeOut;
+    timeOut = opcionesJuego[dificultad].timeOut;
     
     if ( palabras.includes( palabraABuscar ) ) {
-        alert(palabraRepetida);
+        alert(textos.palabraRepetida);
     } else {
         palabras.push(palabraABuscar);
     }
@@ -130,14 +140,19 @@ function startGame(palabraElegida, dificultadElegida) {
     //muestra las letras
     renderLetras();
 
+    //carga los listener del juego, en la funcion endGame los borra
+    document.addEventListener('keypress', intento);
+    
     //cargar imagen ahorcado
+    imagenAhorcado(oportunidadesPerdidas);
 
     //iniciar tiempo
-    setTimeout(() => {
-        alert(textoFinalTiempo);
+    window.timeoutGameId = setTimeout(() => {
+        alert(textos.textoFinalTiempo);
 
-        //va a pagina de resultados
-        setScreen('resultados');
+        //termina el juego
+        endGame(false);
+        
 
     }, timeOut);
     //ir a pantalla juego
@@ -145,10 +160,50 @@ function startGame(palabraElegida, dificultadElegida) {
 }
 
 
+//carga los resultados y te lleva a la pantalla de resultados
+function endGame(exito) {
+    clearInterval(window.timeoutGameId);
+
+    document.removeEventListener('keypress', intento);
+    
+    //textos ganadores o perdedores
+    if (exito) {
+        pTituloResultado.innerText = textos.tituloGanado;
+        pResumenResultado.innerText = textos.hasGanado;
+    } else {
+        pTituloResultado.innerText = textos.tituloPerdido;
+        pResumenResultado.innerText = textos.hasPerdido;
+    }
+
+    
+
+    let tituloResultados = document.createElement('h4');
+        tituloResultados.innerText = 'Resultados:';
+
+    let pTiempo = document.createElement('p');
+        pTiempo.innerHTML = '<strong>Tiempo</strong>: '+(opcionesJuego[dificultad].timeOut/1000)+' segundos:';
+    
+    let pPalabra = document.createElement('p');
+        pPalabra.innerHTML = '<strong>Palabra</strong>: '+palabraABuscar;
+
+    let pIntentos = document.createElement('p');
+        pIntentos.innerHTML = '<strong>Intentos fallidos</strong>: '+oportunidadesPerdidas;
+
+    divResumenWrapper.innerHTML = '';
+    divResumenWrapper.append(tituloResultados);
+    divResumenWrapper.append(pTiempo);
+    divResumenWrapper.append(pPalabra);
+    divResumenWrapper.append(pIntentos);
+    
+    setScreen('resultados');
+
+}
+
+
 //imprime los li con las letras y calcula cuantas mostrar
 function renderLetras () {
 
-    const letrasMostrar = opcionesDificultad[dificultad].mostrarLetras
+    const letrasMostrar = opcionesJuego[dificultad].mostrarLetras
     let letrasMostradas = 0;
     let posicion = null;
     
@@ -166,9 +221,15 @@ function renderLetras () {
                 li.classList.add('active');
                 posicion = index;
                 letrasMostradas++;
+
+                //las letras mostramos las contamos como si fueran adivinadas para que luego de la suma
+                letrasAdivinadas++;
             } else if (index == (posicion+2) ) {
                 li.classList.add('active');
                 letrasMostradas++;
+
+                //las letras mostramos las contamos como si fueran adivinadas para que luego de la suma
+                letrasAdivinadas++;
             }
 
         }
@@ -179,24 +240,83 @@ function renderLetras () {
 }
 
 function pauseGame() {
-    console.log(juegoEnPausa);
+    console.log(textos.juegoEnPausa);
 }
 
 
 //cada intento de adivinar del usuario, cuando coloca una imagen
-function intento(params) {
-    oportunidadesPerdidas++
+function intento(event) {
+    let letra = event.key.toLowerCase();
+    console.log(letra);
 
-    imagenAhorcado(oportunidadesPerdidas);
+    //primero vemos si la letra no se uso antes
+    if ( letrasIntentadas.includes(letra) ) {
+        alert(textos.yaLaDijiste);
+        return true;
+    } else {
+        //si no se uso se agrega al array de intentos
+        letrasIntentadas.push(letra);
+    }
 
-    if (oportunidadesPerdidas == oportunidades) {
-        console.log(juegoPerdido);
-        pauseGame();
+    
+    //ahora vemos si adivinaste o no la letra
+    if (letras.includes(letra)) {
+        //ADIVINASTE
+
+        //vemos en que posicion esta esa letra, puede estar repetida
+        let posiciones = [];
+        letras.forEach( (l, index) => {
+            if (l === letra) {
+                posiciones.push(index);
+            }
+        });
+
+        //mostramos las que corresponden
+        let lisLetras = letrasDiv.querySelectorAll('li');
+        posiciones.forEach(posicion => {
+            //chequeamos si esta activa o no, sino esta activa la sumamos y sino continaumos
+            if ( !lisLetras[posicion].classList.contains('active') ){
+                lisLetras[posicion].classList.add('active');
+
+                //sumamos las letras adivinadas
+                letrasAdivinadas++;
+            }
+        });
+        
+        console.log(letrasAdivinadas, letras.length);
+        if ( letrasAdivinadas >= letras.length ) {
+            endGame(true);
+        }
+        
+
+    } else {
+        //NO ADIVINASTE
+        
+        //1. sumo una oportunidad perdida
+        oportunidadesPerdidas++;
+        
+        //2. redibujo la imagen del ahorcado
+        imagenAhorcado(oportunidadesPerdidas);
+
+        //si oportunidades peridas es = a lo permitida el juego se termina
+        if ( oportunidadesPerdidas === opcionesJuego[dificultad].oportunidades ) {
+            endGame(false);
+        }
+
     }
 }
 
 function imagenAhorcado(oportunidadesPerdidas) {
-    console.log('imagen ahorcado, paso n: ' + oportunidadesPerdidas);
+    let urlImagen = 'assets/images/ahorcado';
+    let extension = '.png';
+    let retina = '@2x';
+    
+    let img = document.createElement('img');
+        img.setAttribute('src', urlImagen+oportunidadesPerdidas+extension);
+        img.setAttribute('srcset', urlImagen+oportunidadesPerdidas+extension + ' 1x, ' + urlImagen+oportunidadesPerdidas+retina+extension + ' 2x');
+    
+    divAhorcado.innerHTML = '';
+    divAhorcado.append(img);
 }
 
 

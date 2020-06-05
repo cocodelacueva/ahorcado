@@ -307,7 +307,7 @@ function intento(event) {
 }
 
 function imagenAhorcado(oportunidadesPerdidas) {
-    let urlImagen = 'assets/images/ahorcado';
+    let urlImagen = 'assets/images/ahoracado';
     let extension = '.png';
     let retina = '@2x';
     

@@ -39,17 +39,17 @@ let opcionesJuego = {
     facil : {
         oportunidades: 7,
         mostrarLetras: 2,
-        timeOut: 30000//30segundos
+        timeOut: 50000//30segundos
     },
     medio : {
         oportunidades: 7,
         mostrarLetras: 1,
-        timeOut: 20000//20segundos
+        timeOut: 40000//20segundos
     },
     dificil : {
         oportunidades: 7,
         mostrarLetras: 0,
-        timeOut: 10000//10segundos
+        timeOut: 30000//10segundos
     },
 }
 
